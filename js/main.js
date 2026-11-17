@@ -19,7 +19,106 @@ function openEra(i){selected=i;title.textContent=eras[i].name;description.textCo
 dialog.querySelector('[data-action="close"]').addEventListener("click",()=>dialog.close());
 dialog.querySelector(".dialog-close").addEventListener("click",()=>dialog.close());
 dialog.querySelector('[data-action="open-era"]').addEventListener("click",()=>{dialog.close();showEra(selected);});
-function showEra(i){const e=eras[i];document.querySelector("#era-heading").textContent=e.name;document.querySelector("#era-date").textContent=e.date;document.querySelector("#era-intro").textContent=e.detail;const links=document.querySelector("#era-links");links.replaceChildren();["Vestimenta","Arte","Arquitectura","Materiales","Accesorios","Mapa"].forEach(label=>{const b=document.createElement("button");b.textContent=label;b.addEventListener("click",()=>{document.querySelector("#era-intro").textContent=e.detail+" Este apartado se desarrollará con el contenido específico del diseño original.";});links.append(b);});page.hidden=false;}
+const eraSections = {
+  "Egipto": ["Vestimenta", "Maquillaje", "Confección", "Arquitectura", "Accesorios", "Mapa"],
+  "Grecia": ["Vestimenta", "Espartanos", "Arquitectura", "Arte", "Mapa", "Sabías que…"],
+  "Roma": ["Vestimenta", "Arquitectura", "Arte", "Mapa"],
+  "Bizantino": ["Vestimenta", "Arquitectura", "Joyas", "Nuevos materiales", "Arte", "Mapa"],
+  "Edad Media": ["Vestimenta", "Arquitectura", "Arte", "Mapa", "Nuevos materiales"],
+  "Renacimiento": ["Vestimenta", "Arquitectura", "Arte", "Accesorios", "Mapa"],
+  "Barroco": ["Vestimenta", "Arquitectura", "Arte", "Accesorios", "Materiales", "Mapa"],
+  "Rococó": ["Vestimenta", "Arquitectura", "Arte", "Accesorios", "Materiales", "Mapa"],
+  "Neoclasicismo": ["Vestimenta", "Arquitectura", "Arte", "Accesorios", "Mapa"],
+  "Romanticismo": ["Vestimenta", "Arquitectura", "Arte", "Accesorios", "Mapa"]
+};
+
+const designModal = document.createElement("dialog");
+designModal.className = "design-modal";
+designModal.id = "design-modal";
+designModal.innerHTML = '<div class="design-modal-stage"><img class="design-modal-image" alt=""><div class="design-modal-hotspots"></div></div>';
+document.body.append(designModal);
+const designImage = designModal.querySelector(".design-modal-image");
+const hotspots = designModal.querySelector(".design-modal-hotspots");
+
+const modalScreens = {
+  "Grecia": {
+    "Vestimenta": {
+      image: "assets/images/modal-grecia-hombre.png",
+      alternate: "assets/images/modal-grecia-mujer.png",
+      dimensions: [1184, 748],
+      hotspots: [
+        {label:"Cambiar a hombre",x:300,y:520,w:145,h:44,action:"greek-man"},
+        {label:"Cambiar a mujer",x:445,y:520,w:155,h:44,action:"greek-woman"},
+        {label:"Cerrar",x:805,y:0,w:85,h:48,action:"close"}
+      ]
+    }
+  },
+  "Edad Media": {
+    "Vestimenta": {
+      image: "assets/images/modal-edad-media-selector.png",
+      dimensions: [1184, 748],
+      hotspots: [{label:"Cerrar",x:990,y:0,w:194,h:60,action:"close"}]
+    }
+  },
+  "Romanticismo": {
+    "Vestimenta": {
+      image: "assets/images/modal-romanticismo-hombre.png",
+      alternate: "assets/images/modal-romanticismo-mujer.png",
+      dimensions: [1578, 997],
+      hotspots: [
+        {label:"Cambiar a hombre",x:640,y:690,w:280,h:80,action:"romantic-man"},
+        {label:"Cambiar a mujer",x:920,y:690,w:280,h:80,action:"romantic-woman"},
+        {label:"Cerrar",x:900,y:0,w:180,h:80,action:"close"}
+      ]
+    }
+  }
+};
+let activeScreen = null;
+function showDesignScreen(screen, imageOverride) {
+  activeScreen = screen;
+  designImage.src = imageOverride || screen.image;
+  designImage.alt = "Diseño original de Figma";
+  hotspots.replaceChildren();
+  (screen.hotspots || []).forEach(h => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "design-hotspot";
+    b.setAttribute("aria-label", h.label);
+    b.style.left = (h.x / screen.dimensions[0] * 100) + "%";
+    b.style.top = (h.y / screen.dimensions[1] * 100) + "%";
+    b.style.width = (h.w / screen.dimensions[0] * 100) + "%";
+    b.style.height = (h.h / screen.dimensions[1] * 100) + "%";
+    b.addEventListener("click", () => {
+      if (h.action === "close") designModal.close();
+      if (h.action === "greek-man") showDesignScreen(screen, screen.image);
+      if (h.action === "greek-woman") showDesignScreen(screen, screen.alternate);
+      if (h.action === "romantic-man") showDesignScreen(screen, screen.image);
+      if (h.action === "romantic-woman") showDesignScreen(screen, screen.alternate);
+    });
+    hotspots.append(b);
+  });
+  if (!designModal.open) designModal.showModal();
+}
+function showEra(i) {
+  const e = eras[i];
+  document.querySelector("#era-heading").textContent = e.name;
+  document.querySelector("#era-date").textContent = e.date;
+  document.querySelector("#era-intro").textContent = e.detail;
+  const links = document.querySelector("#era-links");
+  links.replaceChildren();
+  const sections = eraSections[e.name] || [];
+  sections.forEach(label => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.addEventListener("click", () => {
+      const screen = modalScreens[e.name]?.[label];
+      if (screen) showDesignScreen(screen);
+    });
+    links.append(b);
+  });
+  page.hidden = false;
+}
 document.querySelector(".era-back").addEventListener("click",()=>{page.hidden=true;});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!dialog.open)page.hidden=true;});
 document.querySelector(".timeline-viewport").addEventListener("keydown",e=>{if(e.key==="ArrowRight")e.currentTarget.scrollBy({left:220,behavior:"smooth"});if(e.key==="ArrowLeft")e.currentTarget.scrollBy({left:-220,behavior:"smooth"});});
