@@ -46,7 +46,7 @@ const modalAssets = {
     hombre: "assets/figma/modales/romanticismo-hombre.png",
     mujer: "assets/figma/modales/romanticismo-mujer.png",
     selector: { x: 648.5, y: 708, w: 280, h: 80 },
-    close: { x: 1360, y: 0, w: 218, h: 90 }
+    close: { x: 909, y: 172, w: 100, h: 55 }
   },
   Barroco: {
     dimensions: [1184, 748],
