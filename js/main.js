@@ -40,63 +40,26 @@ document.body.append(designModal);
 const designImage = designModal.querySelector(".design-modal-image");
 const hotspots = designModal.querySelector(".design-modal-hotspots");
 
-const modalScreens = {
-  "Grecia": {
-    "Vestimenta": {
-      image: "assets/images/modal-grecia-hombre.png",
-      alternate: "assets/images/modal-grecia-mujer.png",
-      dimensions: [1184, 748],
-      hotspots: [
-        {label:"Cambiar a hombre",x:300,y:520,w:145,h:44,action:"greek-man"},
-        {label:"Cambiar a mujer",x:445,y:520,w:155,h:44,action:"greek-woman"},
-        {label:"Cerrar",x:805,y:0,w:85,h:48,action:"close"}
-      ]
-    }
-  },
-  "Edad Media": {
-    "Vestimenta": {
-      image: "assets/images/modal-edad-media-selector.png",
-      dimensions: [1184, 748],
-      hotspots: [{label:"Cerrar",x:990,y:0,w:194,h:60,action:"close"}]
-    }
-  },
-  "Romanticismo": {
-    "Vestimenta": {
-      image: "assets/images/modal-romanticismo-hombre.png",
-      alternate: "assets/images/modal-romanticismo-mujer.png",
-      dimensions: [1578, 997],
-      hotspots: [
-        {label:"Cambiar a hombre",x:640,y:690,w:280,h:80,action:"romantic-man"},
-        {label:"Cambiar a mujer",x:920,y:690,w:280,h:80,action:"romantic-woman"},
-        {label:"Cerrar",x:900,y:0,w:180,h:80,action:"close"}
-      ]
-    }
-  }
-};
-let activeScreen = null;
-function showDesignScreen(screen, imageOverride) {
-  activeScreen = screen;
-  designImage.src = imageOverride || screen.image;
-  designImage.alt = "Diseño original de Figma";
+const svgFolder = "dise%C3%B1o%20de%20indumentaria/Introducci%C3%B3n%20de%20linea%20de%20tiempo";
+const svgForEra = index => `${svgFolder}/${index + 1}.svg`;
+let activeEraSvg = null;
+
+function showSvgSheet(eraIndex, sectionLabel) {
+  const era = eras[eraIndex];
+  const src = svgForEra(eraIndex);
+  activeEraSvg = src;
+  designImage.src = src;
+  designImage.alt = `Lámina original de ${era.name}: ${sectionLabel}`;
+  designModal.dataset.era = era.name;
+  designModal.dataset.section = sectionLabel;
   hotspots.replaceChildren();
-  (screen.hotspots || []).forEach(h => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "design-hotspot";
-    b.setAttribute("aria-label", h.label);
-    b.style.left = (h.x / screen.dimensions[0] * 100) + "%";
-    b.style.top = (h.y / screen.dimensions[1] * 100) + "%";
-    b.style.width = (h.w / screen.dimensions[0] * 100) + "%";
-    b.style.height = (h.h / screen.dimensions[1] * 100) + "%";
-    b.addEventListener("click", () => {
-      if (h.action === "close") designModal.close();
-      if (h.action === "greek-man") showDesignScreen(screen, screen.image);
-      if (h.action === "greek-woman") showDesignScreen(screen, screen.alternate);
-      if (h.action === "romantic-man") showDesignScreen(screen, screen.image);
-      if (h.action === "romantic-woman") showDesignScreen(screen, screen.alternate);
-    });
-    hotspots.append(b);
-  });
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "design-hotspot";
+  close.setAttribute("aria-label", "Cerrar lámina");
+  close.style.cssText = "right:0;top:0;width:8%;height:10%;";
+  close.addEventListener("click", () => designModal.close());
+  hotspots.append(close);
   if (!designModal.open) designModal.showModal();
 }
 function showEra(i) {
@@ -106,9 +69,9 @@ function showEra(i) {
   document.querySelector("#era-intro").textContent = e.detail;
   const visual = document.querySelector(".era-visual");
   const eraImage = document.createElement("img");
-  eraImage.src = `dise%C3%B1o%20de%20indumentaria/Fotos%20de%20la%20L%C3%ADnea%20de%20tiempo/${i+1}.png`;
-  eraImage.alt = `Indumentaria correspondiente a ${e.name}`;
-  eraImage.onerror = () => { eraImage.remove(); };
+  eraImage.src = svgForEra(i);
+  eraImage.alt = `Lámina original de ${e.name}`;
+  eraImage.loading = "lazy";
   visual.replaceChildren(eraImage);
   const links = document.querySelector("#era-links");
   links.replaceChildren();
@@ -118,8 +81,7 @@ function showEra(i) {
     b.type = "button";
     b.textContent = label;
     b.addEventListener("click", () => {
-      const screen = modalScreens[e.name]?.[label];
-      if (screen) showDesignScreen(screen);
+      showSvgSheet(i, label);
     });
     links.append(b);
   });
