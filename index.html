@@ -1,88 +1,32 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171512">
-  <meta name="description" content="Historia de la moda: un recorrido visual por sus épocas y transformaciones.">
-  <title>Historia de la moda</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/main.js" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f1e3ca">
+<title>Historia de la moda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css"><script src="js/main.js" defer></script>
 </head>
 <body>
-  <div class="device-block" role="dialog" aria-modal="true" aria-labelledby="device-title">
-    <div class="device-card">
-      <span class="device-mark" aria-hidden="true">M</span>
-      <p class="eyebrow">Historia de la moda</p>
-      <h1 id="device-title">Una experiencia diseñada para escritorio</h1>
-      <p>Esta experiencia todavía no está disponible en celulares ni tablets. Abrila desde una computadora para recorrer todos sus contenidos.</p>
-      <span class="device-note">Resolución recomendada: 1280 px o superior</span>
-    </div>
-  </div>
-
-  <main class="site-shell">
-    <header class="topbar">
-      <a class="wordmark" href="#inicio" aria-label="Historia de la moda, inicio">H<span>·</span>M</a>
-      <nav aria-label="Navegación principal">
-        <a href="#inicio">Inicio</a>
-        <a href="#recorrido">Recorrido histórico</a>
-        <a href="#epocas">Épocas</a>
-      </nav>
-      <span class="topbar-caption">Un viaje a través del tiempo</span>
-    </header>
-
-    <section class="hero" id="inicio" aria-label="Portada">
-      <img class="hero-art" src="https://www.figma.com/api/mcp/asset/788786ca-abdc-4ce4-9404-ce206213d9dd.png" alt="Portada original del proyecto de historia de la moda">
-      <a class="hero-continue" href="#recorrido">Comenzar recorrido <span aria-hidden="true">↗</span></a>
-    </section>
-
-    <section class="timeline-section" id="recorrido">
-      <div class="section-heading">
-        <p class="eyebrow">Línea de tiempo</p>
-        <h1>La moda a través de los siglos</h1>
-        <p>Explorá las épocas, sus transformaciones y las expresiones culturales que definieron cada período.</p>
-      </div>
-      <div class="timeline-art-wrap">
-        <img class="timeline-art" src="https://www.figma.com/api/mcp/asset/62c4dd51-0557-48ba-9d67-5b6ce9e501c1.png" alt="Línea de tiempo histórica del diseño original">
-      </div>
-      <div class="era-grid" id="epocas" aria-label="Explorar épocas históricas">
-        <a class="era-card" href="#egipto"><span>01</span><strong>Egipto</strong><small>Antigüedad</small></a>
-        <a class="era-card" href="#grecia"><span>02</span><strong>Grecia</strong><small>Antigüedad clásica</small></a>
-        <a class="era-card" href="#roma"><span>03</span><strong>Roma</strong><small>Imperio romano</small></a>
-        <a class="era-card" href="#bizantino"><span>04</span><strong>Bizantino</strong><small>Imperio de Oriente</small></a>
-        <a class="era-card" href="#edad-media"><span>05</span><strong>Edad Media</strong><small>Románico y gótico</small></a>
-        <a class="era-card" href="#renacimiento"><span>06</span><strong>Renacimiento</strong><small>Europa, siglos XV–XVI</small></a>
-        <a class="era-card" href="#barroco"><span>07</span><strong>Barroco</strong><small>Siglos XVII–XVIII</small></a>
-        <a class="era-card" href="#rococo"><span>08</span><strong>Rococó</strong><small>Siglo XVIII</small></a>
-        <a class="era-card" href="#neoclasicismo"><span>09</span><strong>Neoclasicismo</strong><small>Finales del XVIII</small></a>
-        <a class="era-card" href="#romanticismo"><span>10</span><strong>Romanticismo</strong><small>Siglo XIX</small></a>
-      </div>
-    </section>
-
-    <section class="era-overview" aria-label="Contenido por época">
-      <article class="era-detail" id="egipto"><p class="eyebrow">01 · Antigüedad</p><h2>Egipto</h2><p>Indumentaria, ornamentos, maquillaje y materiales en una de las culturas más influyentes de la Antigüedad.</p><button class="text-button" data-era="egipto">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="grecia"><p class="eyebrow">02 · Antigüedad clásica</p><h2>Grecia</h2><p>El drapeado, las proporciones y la relación entre vestimenta, cuerpo y vida cotidiana.</p><button class="text-button" data-era="grecia">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="roma"><p class="eyebrow">03 · Imperio</p><h2>Roma</h2><p>Prendas, distinciones sociales y símbolos de poder en el mundo romano.</p><button class="text-button" data-era="roma">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="bizantino"><p class="eyebrow">04 · Imperio de Oriente</p><h2>Bizantino</h2><p>Riqueza textil, color y jerarquía en la indumentaria del Imperio bizantino.</p><button class="text-button" data-era="bizantino">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="edad-media"><p class="eyebrow">05 · Edad Media</p><h2>Edad Media</h2><p>Los estilos románico y gótico, sus siluetas, materiales y expresiones visuales.</p><button class="text-button" data-era="edad-media">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="renacimiento"><p class="eyebrow">06 · Europa</p><h2>Renacimiento</h2><p>La moda en Italia, Francia, Inglaterra y España durante el Renacimiento.</p><button class="text-button" data-era="renacimiento">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="barroco"><p class="eyebrow">07 · Siglos XVII–XVIII</p><h2>Barroco</h2><p>Volumen, ornamentación y teatralidad en la vestimenta y los accesorios.</p><button class="text-button" data-era="barroco">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="rococo"><p class="eyebrow">08 · Siglo XVIII</p><h2>Rococó</h2><p>La delicadeza ornamental, las texturas y las siluetas características del período.</p><button class="text-button" data-era="rococo">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="neoclasicismo"><p class="eyebrow">09 · Finales del siglo XVIII</p><h2>Neoclasicismo</h2><p>El regreso a los ideales clásicos y su influencia en la indumentaria.</p><button class="text-button" data-era="neoclasicismo">Explorar época <span>↗</span></button></article>
-      <article class="era-detail" id="romanticismo"><p class="eyebrow">10 · Siglo XIX</p><h2>Romanticismo</h2><p>La expresión individual, las siluetas y los detalles de la moda romántica.</p><button class="text-button" data-era="romanticismo">Explorar época <span>↗</span></button></article>
-    </section>
-    <footer><span>H·M — Historia de la moda</span><a href="#inicio">Volver al inicio ↑</a></footer>
-  </main>
-
-  <dialog class="era-dialog" id="era-dialog" aria-labelledby="dialog-title">
-    <button class="dialog-close" type="button" aria-label="Cerrar">×</button>
-    <p class="eyebrow">Recorrido histórico</p>
-    <h2 id="dialog-title"></h2>
-    <p id="dialog-description"></p>
-    <p class="dialog-note">Los paneles, imágenes y modales específicos de cada época se incorporarán a partir de los marcos originales de Figma.</p>
-  </dialog>
-</body>
-</html>
+<div class="device-block" role="dialog" aria-modal="true"><div class="device-card"><span class="monogram">H·M</span><p class="eyebrow">Historia de la moda</p><h1>Una experiencia diseñada para escritorio</h1><p>Esta página todavía no está disponible en celulares ni tablets. Abrila desde una computadora para recorrer todos sus contenidos.</p></div></div>
+<main id="app">
+<section class="screen cover" id="cover" aria-label="Portada">
+<div class="cover-backdrop"></div><div class="cover-gradient"></div>
+<div class="cover-editorial"><p class="cover-kicker">EL VIAJE DE LA INDUMENTARIA A TRAVÉS DEL TIEMPO</p><h1>De la caverna a la metrópolis: seis eras,<br>seis siluetas, una historia continua</h1></div>
+<div class="characters" aria-label="Personajes históricos"><div class="character character-prehistoric"><span>01</span></div><div class="character character-egypt"><span>02</span></div><div class="character character-renaissance"><span>03</span></div><div class="character character-rococo"><span>04</span></div><div class="character character-modern"><span>05</span></div></div>
+<div class="cover-rule"></div><a class="cover-cta" href="#timeline">Línea de tiempo <span>01</span><i>↗</i></a>
+</section>
+<section class="screen timeline" id="timeline" aria-label="Línea de tiempo histórica">
+<div class="timeline-top"><span class="timeline-brand">H·M</span><div class="era-index"><b>01</b><span>11 eras</span></div><span class="timeline-hint">DESLIZÁ PARA RECORRER LA HISTORIA</span></div>
+<div class="timeline-viewport" tabindex="0" aria-label="Línea de tiempo. Desplazate horizontalmente">
+<div class="timeline-track">
+<div class="timeline-upper" id="timeline-upper"></div>
+<div class="timeline-axis"><span class="axis-arrow axis-left">←</span><div class="axis-line"></div><span class="axis-arrow axis-right">→</span></div>
+<div class="timeline-lower" id="timeline-lower"></div>
+</div></div>
+<div class="timeline-control"><span>SCROLL</span><span class="scroll-symbol">↔</span></div>
+<a class="back-cover" href="#cover">← VOLVER A PORTADA</a>
+</section>
+</main>
+<dialog class="era-dialog" id="era-dialog"><button class="dialog-close" aria-label="Cerrar">×</button><p class="eyebrow">RECORRIDO HISTÓRICO</p><h2 id="dialog-title"></h2><p id="dialog-description"></p><div class="dialog-actions"><button data-action="open-era">Explorar época ↗</button><button data-action="close">Cerrar ×</button></div></dialog>
+<section class="era-page" id="era-page" hidden><button class="era-back" type="button">← VOLVER A LÍNEA DE TIEMPO</button><div class="era-page-content"><div class="era-visual" aria-hidden="true"></div><div class="era-copy"><p class="eyebrow" id="era-date"></p><h2 id="era-heading"></h2><p id="era-intro"></p><div class="era-links" id="era-links"></div></div></div></section>
