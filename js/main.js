@@ -42,14 +42,15 @@ const hotspots = designModal.querySelector(".design-modal-hotspots");
 
 const svgFolder = "dise%C3%B1o%20de%20indumentaria/Introducci%C3%B3n%20de%20linea%20de%20tiempo";
 const svgForEra = index => `${svgFolder}/${index + 1}.svg`;
-let activeEraSvg = null;
-
 function showSvgSheet(eraIndex, sectionLabel) {
   const era = eras[eraIndex];
   const src = svgForEra(eraIndex);
-  activeEraSvg = src;
   designImage.src = src;
   designImage.alt = `Lámina original de ${era.name}: ${sectionLabel}`;
+  designImage.onerror = () => {
+    designImage.onerror = null;
+    designImage.alt = `No se pudo cargar la lámina SVG de ${era.name}`;
+  };
   designModal.dataset.era = era.name;
   designModal.dataset.section = sectionLabel;
   hotspots.replaceChildren();
@@ -57,7 +58,9 @@ function showSvgSheet(eraIndex, sectionLabel) {
   close.type = "button";
   close.className = "design-hotspot";
   close.setAttribute("aria-label", "Cerrar lámina");
-  close.style.cssText = "right:0;top:0;width:8%;height:10%;";
+  close.textContent = "×";
+  close.title = "Cerrar";
+  close.style.cssText = "right:12px;top:12px;width:42px;height:42px;background:#2a1810;color:#f7edd9;border:1px solid #b88752;border-radius:50%;font:28px/1 Georgia;display:grid;place-items:center;";
   close.addEventListener("click", () => designModal.close());
   hotspots.append(close);
   if (!designModal.open) designModal.showModal();
@@ -72,6 +75,10 @@ function showEra(i) {
   eraImage.src = svgForEra(i);
   eraImage.alt = `Lámina original de ${e.name}`;
   eraImage.loading = "lazy";
+  eraImage.onerror = () => {
+    eraImage.onerror = null;
+    eraImage.src = `dise%C3%B1o%20de%20indumentaria/Fotos%20de%20la%20L%C3%ADnea%20de%20tiempo/${i+1}.png`;
+  };
   visual.replaceChildren(eraImage);
   const links = document.querySelector("#era-links");
   links.replaceChildren();
