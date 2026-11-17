@@ -40,29 +40,75 @@ document.body.append(designModal);
 const designImage = designModal.querySelector(".design-modal-image");
 const hotspots = designModal.querySelector(".design-modal-hotspots");
 
-const svgFolder = "dise%C3%B1o%20de%20indumentaria/Introducci%C3%B3n%20de%20linea%20de%20tiempo";
-const svgForEra = index => `${svgFolder}/${index + 1}.svg`;
+const modalAssets = {
+  Romanticismo: {
+    dimensions: [1578, 997],
+    hombre: "assets/figma/modales/romanticismo-hombre.png",
+    mujer: "assets/figma/modales/romanticismo-mujer.png",
+    selector: { x: 648.5, y: 708, w: 280, h: 80 },
+    close: { x: 1360, y: 0, w: 218, h: 90 }
+  },
+  Barroco: {
+    dimensions: [1184, 748],
+    hombre: "assets/figma/modales/barroco-hombre.png",
+    mujer: "assets/figma/modales/barroco-mujer.png",
+    selector: { x: 451, y: 582.5, w: 280, h: 80 },
+    close: { x: 710, y: 0, w: 180, h: 75 }
+  },
+  Rococó: {
+    dimensions: [1184, 748],
+    hombre: "assets/figma/modales/rococo-hombre.png",
+    mujer: "assets/figma/modales/rococo-mujer.png",
+    selector: { x: 451, y: 582.5, w: 280, h: 80 },
+    close: { x: 710, y: 0, w: 180, h: 75 }
+  }
+};
+function addHotspot(label, rect, dimensions, handler) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "design-hotspot";
+  button.setAttribute("aria-label", label);
+  button.style.left = (rect.x / dimensions[0] * 100) + "%";
+  button.style.top = (rect.y / dimensions[1] * 100) + "%";
+  button.style.width = (rect.w / dimensions[0] * 100) + "%";
+  button.style.height = (rect.h / dimensions[1] * 100) + "%";
+  button.addEventListener("click", handler);
+  hotspots.append(button);
+}
+function showFigmaModal(eraName, gender = "hombre") {
+  const config = modalAssets[eraName];
+  if (!config) return false;
+  designImage.src = config[gender];
+  designImage.alt = `Modal de vestimenta ${eraName} · ${gender}`;
+  designImage.onerror = () => {
+    designImage.onerror = null;
+    designImage.alt = `No se pudo cargar el modal de ${eraName}`;
+  };
+  hotspots.replaceChildren();
+  const half = config.selector.h / 2;
+  addHotspot("Seleccionar hombre", {...config.selector, h: half}, config.dimensions,
+    () => { if (gender !== "hombre") showFigmaModal(eraName, "hombre"); });
+  addHotspot("Seleccionar mujer", { ...config.selector, y: config.selector.y + half, h: half }, config.dimensions,
+    () => { if (gender !== "mujer") showFigmaModal(eraName, "mujer"); });
+  addHotspot("Cerrar modal", config.close, config.dimensions, () => designModal.close());
+  designModal.dataset.era = eraName;
+  designModal.dataset.gender = gender;
+  if (!designModal.open) designModal.showModal();
+  return true;
+}
 function showSvgSheet(eraIndex, sectionLabel) {
   const era = eras[eraIndex];
-  const src = svgForEra(eraIndex);
+  const src = `dise%C3%B1o%20de%20indumentaria/Introducci%C3%B3n%20de%20linea%20de%20tiempo/${eraIndex + 1}.svg`;
   designImage.src = src;
   designImage.alt = `Lámina original de ${era.name}: ${sectionLabel}`;
   designImage.onerror = () => {
     designImage.onerror = null;
-    designImage.alt = `No se pudo cargar la lámina SVG de ${era.name}`;
+    designImage.alt = `La lámina SVG de ${era.name} no está disponible`;
   };
+  hotspots.replaceChildren();
+  addHotspot("Cerrar lámina", {x:0,y:0,w:140,h:90}, [1184,748], () => designModal.close());
   designModal.dataset.era = era.name;
   designModal.dataset.section = sectionLabel;
-  hotspots.replaceChildren();
-  const close = document.createElement("button");
-  close.type = "button";
-  close.className = "design-hotspot";
-  close.setAttribute("aria-label", "Cerrar lámina");
-  close.textContent = "×";
-  close.title = "Cerrar";
-  close.style.cssText = "right:12px;top:12px;width:42px;height:42px;background:#2a1810;color:#f7edd9;border:1px solid #b88752;border-radius:50%;font:28px/1 Georgia;display:grid;place-items:center;";
-  close.addEventListener("click", () => designModal.close());
-  hotspots.append(close);
   if (!designModal.open) designModal.showModal();
 }
 function showEra(i) {
@@ -84,6 +130,7 @@ function showEra(i) {
     b.type = "button";
     b.textContent = label;
     b.addEventListener("click", () => {
+      if (label === "Vestimenta" && showFigmaModal(e.name, "hombre")) return;
       showSvgSheet(i, label);
     });
     links.append(b);
