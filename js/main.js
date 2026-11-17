@@ -72,13 +72,9 @@ function showEra(i) {
   document.querySelector("#era-intro").textContent = e.detail;
   const visual = document.querySelector(".era-visual");
   const eraImage = document.createElement("img");
-  eraImage.src = svgForEra(i);
-  eraImage.alt = `Lámina original de ${e.name}`;
+  eraImage.src = `dise%C3%B1o%20de%20indumentaria/Fotos%20de%20la%20L%C3%ADnea%20de%20tiempo/${i+1}.png`;
+  eraImage.alt = `Indumentaria correspondiente a ${e.name}`;
   eraImage.loading = "lazy";
-  eraImage.onerror = () => {
-    eraImage.onerror = null;
-    eraImage.src = `dise%C3%B1o%20de%20indumentaria/Fotos%20de%20la%20L%C3%ADnea%20de%20tiempo/${i+1}.png`;
-  };
   visual.replaceChildren(eraImage);
   const links = document.querySelector("#era-links");
   links.replaceChildren();
